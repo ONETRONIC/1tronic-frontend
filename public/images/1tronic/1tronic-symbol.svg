@@ -1,0 +1,16 @@
+<svg width="331" height="512" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1">
+ <defs>
+  <linearGradient y2="0.30996" x2="0.50051" y1="0.11553" x1="0.50051" id="SVGID_1_">
+   <stop stop-color="#FF8C00" offset="0"/>
+   <stop stop-color="#FFF700" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1">
+   <rect id="svg_2" fill="#FE4101" clip-rule="evenodd" fill-rule="evenodd" height="101.5" width="97.7" class="st0" y="169.65001" x="224.40001"/>
+   <polygon id="svg_3" stroke-miterlimit="10" stroke-linejoin="round" stroke-linecap="round" stroke-width="0.036" stroke="#FFFFFF" fill="#FF8C00" clip-rule="evenodd" fill-rule="evenodd" points="204.90000915527344,7.850006580352783 8.900009155273438,203.85000610351562 78.39999389648438,272.7500305175781 204.3000030517578,145.85000610351562 " class="st1"/>
+   <path id="svg_4" fill="url(#SVGID_1_)" clip-rule="evenodd" fill-rule="evenodd" d="m107.10001,243.45001l0,148.2c0,93.1 97.7,114.5 97.7,114.5l0,-498.3l-97.7,98.3l0,137.3l0,0z" class="st2"/>
+  </g>
+ </g>
+</svg>
