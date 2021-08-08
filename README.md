@@ -1,7 +1,7 @@
-#1Tronic Swap
+# 1Tronic Swap
 
-#Install
+## Install
 Run yarn to install dependencies.
 
-#Run
+## Run
 Run yarn start to execute on localhost
