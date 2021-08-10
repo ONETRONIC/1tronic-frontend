@@ -32,21 +32,33 @@ const getHeight = ({ scale = scales.MD }: StyledInputProps) => {
   }
 };
 
+const getFontSize = ({ scale = scales.MD }: StyledInputProps) => {
+  switch (scale) {
+    case scales.SM:
+      return "12px";
+    case scales.LG:
+      return "24px";
+    case scales.MD:
+    default:
+      return "24px";
+  }
+};
+
 const Input = styled.input<InputProps>`
-  background-color: ${({ theme }) => theme.colors.input};
-  border: 0;
+  background-color: ${({ contrastMode, theme }) => !contrastMode ? theme.colors.input : `tranparent`};
+  border: 1px solid ${({ contrastMode, theme }) => !contrastMode ? theme.colors.text : theme.colors.background };
   border-radius: 8px;
   box-shadow: ${getBoxShadow};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ contrastMode, theme }) => !contrastMode ? theme.colors.text : theme.colors.background };
   display: block;
-  font-size: 16px;
+  font-size: ${getFontSize};
   height: ${getHeight};
   outline: 0;
   padding: 0 16px;
   width: 100%;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.textSubtle};
+    color: ${({ contrastMode, theme }) => !contrastMode ? theme.colors.textSubtle : theme.colors.textSubtle };
   }
 
   &:disabled {
@@ -65,6 +77,7 @@ Input.defaultProps = {
   scale: scales.MD,
   isSuccess: false,
   isWarning: false,
+  contrastMode: false,
 };
 
 export default Input;

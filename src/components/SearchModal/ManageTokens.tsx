@@ -97,7 +97,8 @@ export default function ManageTokens({
           <Row>
             <Input
               id="token-search-input"
-              scale="lg"
+              scale="sm"
+              contrastMode
               placeholder="0x0000"
               value={searchQuery}
               autoComplete="off"

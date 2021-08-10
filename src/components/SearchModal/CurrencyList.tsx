@@ -27,11 +27,16 @@ const StyledBalanceText = styled(Text)`
   overflow: hidden;
   max-width: 5rem;
   text-overflow: ellipsis;
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.background};
+`
+const StyledFixedSizeList = styled(FixedSizeList)`
+  border-top: 1px solid ${({ theme }) => theme.colors.subtleLine};
 `
 
 const FixedContentRow = styled.div`
   padding: 4px 20px;
-  height: 56px;
+  height: 42px;
   display: grid;
   grid-gap: 16px;
   align-items: center;
@@ -43,7 +48,6 @@ function Balance({ balance }: { balance: CurrencyAmount }) {
 
 const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   padding: 4px 20px;
-  height: 56px;
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
   grid-gap: 8px;
@@ -52,8 +56,8 @@ const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   :hover {
     background-color: ${({ theme, disabled }) => !disabled && theme.colors.highlight};
   }
-  background-color: ${({ theme,disabled, selected }) => disabled || selected ? theme.colors.highlight : "#00000"};
-  opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+  background-color: ${({ theme,disabled, selected }) => disabled || selected ? theme.colors.highlight : "#00000"}80;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.subtleLine};
 `
 
 function CurrencyRow({
@@ -87,8 +91,8 @@ function CurrencyRow({
     >
       <CurrencyLogo currency={currency} size="24px" />
       <Column>
-        <Text color="background" bold>{currency.symbol}</Text>
-        <Text color="background" small ellipsis maxWidth="200px">
+        <Text color="background" bold fontSize="12px">{currency.symbol}</Text>
+        <Text color="background" small ellipsis maxWidth="200px" fontSize="12px">
           {!isOnSelectedList && customAdded && 'Added by user •'} {currency.name}
         </Text>
       </Column>
@@ -198,16 +202,16 @@ export default function CurrencyList({
   const itemKey = useCallback((index: number, data: any) => currencyKey(data[index]), [])
 
   return (
-    <FixedSizeList
+    <StyledFixedSizeList
       height={height}
       ref={fixedListRef as any}
       width="100%"
       itemData={itemData}
       itemCount={itemData.length}
-      itemSize={56}
+      itemSize={44}
       itemKey={itemKey}
     >
       {Row}
-    </FixedSizeList>
+    </StyledFixedSizeList>
   )
 }

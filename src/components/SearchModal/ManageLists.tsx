@@ -29,13 +29,14 @@ const Wrapper = styled(Column)`
 `
 
 const RowWrapper = styled(Row)<{ active: boolean }>`
-  background-color: ${({ active, theme }) => (active ? `${theme.colors.highlight}19` : 'transparent')};
+  background-color: ${({ active, theme }) => (active ? `${theme.colors.secondary}19` : 'transparent')};
   border: solid 1px;
-  border-color: ${({ active, theme }) => (active ? theme.colors.highlight : theme.colors.tertiary)};
+  border-color: ${({ active, theme }) => (active ? theme.colors.secondary : theme.colors.tertiary)};
   transition: 200ms;
   align-items: center;
   padding: 1rem;
   border-radius:8px;
+  padding: 12px;
 `
 
 function listUrlRowHTMLId(listUrl: string) {
@@ -95,13 +96,13 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
     <RowWrapper active={isActive} key={listUrl} id={listUrlRowHTMLId(listUrl)}>
       {tooltipVisible && tooltip}
       {list.logoURI ? (
-        <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
+        <ListLogo size="24px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
       ) : (
         <div style={{ width: '24px', height: '24px', marginRight: '1rem' }} />
       )}
       <Column style={{ flex: '1' }}>
         <Row>
-          <Text bold color="background">{list.name}</Text>
+          <Text bold color="background" fontSize="12px">{list.name}</Text>
         </Row>
         <RowFixed mt="4px">
           <Text fontSize="12px" mr="6px" textTransform="lowercase" color="background">
@@ -114,6 +115,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
       </Column>
       <Toggle
         checked={isActive}
+        scale="sm"
         onChange={() => {
           if (isActive) {
             handleDisableList()
@@ -241,7 +243,8 @@ function ManageLists({
         <Row>
           <Input
             id="list-add-input"
-            scale="lg"
+            scale="sm"
+            contrastMode
             placeholder={t('https:// or ipfs:// or ENS name')}
             value={listUrlInput}
             onChange={handleInput}

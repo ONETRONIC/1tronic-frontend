@@ -49,12 +49,10 @@ export const OneTronic: { [chainId: number]: Token } = {
   ),
  
 }
-export const WBNB = new Token(ChainId.MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'WBNB', 'Wrapped BNB')
+export const WBNB = new Token(ChainId.MAINNET, '0xae13d989dac2f0debff460ac112a837c89baa7cd', 18, 'WBNB', 'Wrapped BNB')
 export const DAI = new Token(ChainId.MAINNET, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin')
-export const USDT = new Token(ChainId.MAINNET, '0x55d398326f99059fF775485246999027B3197955', 18, 'USDT', 'Tether USD')
+export const USDT = new Token(ChainId.TESTNET, '0xA11c8D9DC9b66E209Ef60F0C8D969D3CD988782c', 6, 'USDT', 'Tether USD')
 export const BTCB = new Token(ChainId.MAINNET, '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c', 18, 'BTCB', 'Binance BTC')
-export const wBNB = new Token(ChainId.TESTNET, '0xae13d989dac2f0debff460ac112a837c89baa7cd', 18, 'WBNB', 'Wrapped BNB')
-export const usdt = new Token(ChainId.TESTNET, '0xA11c8D9DC9b66E209Ef60F0C8D969D3CD988782c', 6, 'USDT', 'Tether USD')
 
 export const UST = new Token(
   ChainId.MAINNET,
@@ -606,10 +604,10 @@ const tokens = {
     projectLink: 'https://venus.io/',
   },
   wbnb: {
-    symbol: 'wBNB',
+    symbol: 'WBNB',
     address: {
       56: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-      97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
+      97: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
     },
     decimals: 18,
     projectLink: 'https://pancakeswap.finance/',
@@ -780,7 +778,7 @@ const tokens = {
     symbol: 'BUSD',
     address: {
       56: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
-      97: '',
+      97: '0x8301f2213c0eed49a7e28ae4c3e91722919b8b47',
     },
     decimals: 18,
     projectLink: 'https://www.paxos.com/busd/',
@@ -852,7 +850,7 @@ const tokens = {
     symbol: 'USDC',
     address: {
       56: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-      97: '',
+      97: '0x16227d60f7a0e586c66b005219dfc887d13c9531',
     },
     decimals: 18,
     projectLink: 'https://www.centre.io/usdc',
@@ -915,7 +913,7 @@ const tokens = {
     symbol: 'USDT',
     address: {
       56: '0x55d398326f99059fF775485246999027B3197955',
-      97: '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
+      97: '0xA11c8D9DC9b66E209Ef60F0C8D969D3CD988782c',
     },
     decimals: 18,
     projectLink: 'https://tether.to/',

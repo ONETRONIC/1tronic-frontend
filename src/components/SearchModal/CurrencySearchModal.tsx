@@ -29,12 +29,12 @@ const Footer = styled.div`
 `
 
 const StyledModalContainer = styled(ModalContainer)`
-  max-width: 420px;
+  max-width: 300px;
   width: 100%;
 `
 
 const StyledModalBody = styled(ModalBody)`
-  padding: 24px;
+  padding: 12px 24px;
 `
 
 interface CurrencySearchModalProps extends InjectedModalProps {
@@ -87,7 +87,7 @@ export default function CurrencySearchModal({
   }
 
   return (
-    <StyledModalContainer minWidth="320px">
+    <StyledModalContainer minWidth="300px">
       <ModalHeader>
         <ModalTitle>
           {config[modalView].onBack && <ModalBackButton onBack={config[modalView].onBack} />}

@@ -117,17 +117,18 @@ function CurrencySearch({
   return (
     <>
       <div>
-        <AutoColumn gap="16px">
+        <AutoColumn gap="0px">
           <Row>
             <Input
               id="token-search-input"
               placeholder={t('Search name or paste address')}
-              scale="lg"
+              scale="sm"
               autoComplete="off"
               value={searchQuery}
               ref={inputRef as RefObject<HTMLInputElement>}
               onChange={handleInput}
               onKeyDown={handleEnter}
+              contrastMode
             />
           </Row>
           {showCommonBases && (
@@ -139,9 +140,9 @@ function CurrencySearch({
             <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
           </Column>
         ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-          <Box margin="24px -24px">
+          <Box margin="12px -24px">
             <CurrencyList
-              height={390}
+              height={((filteredInactiveTokens ? filteredSortedTokens.concat(filteredInactiveTokens) : filteredSortedTokens).length + 1) * 45}
               showETH={showETH}
               currencies={
                 filteredInactiveTokens ? filteredSortedTokens.concat(filteredInactiveTokens) : filteredSortedTokens

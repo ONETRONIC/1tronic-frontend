@@ -41,13 +41,13 @@ function ConfirmationPendingContent({ pendingText }: { pendingText: string }) {
         <Spinner />
       </ConfirmedIcon>
       <AutoColumn gap="12px" justify="center">
-        <Text fontSize="20px">{t('Waiting For Confirmation')}</Text>
+        <Text fontSize="20px" color="background">{t('Waiting For Confirmation')}</Text>
         <AutoColumn gap="12px" justify="center">
-          <Text bold small textAlign="center">
+          <Text bold small textAlign="center" color="background">
             {pendingText}
           </Text>
         </AutoColumn>
-        <Text small color="textSubtle" textAlign="center">
+        <Text small color="background" textAlign="center">
           {t('Confirm this transaction in your wallet')}
         </Text>
       </AutoColumn>
@@ -76,12 +76,12 @@ function TransactionSubmittedContent({
     <Wrapper>
       <Section>
         <ConfirmedIcon>
-          <ArrowUpIcon strokeWidth={0.5} width="90px" color="primary" />
+          <ArrowUpIcon strokeWidth={0.5} width="90px" color="highlight" />
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify="center">
-          <Text fontSize="20px">{t('Transaction Submitted')}</Text>
+          <Text fontSize="20px"  color="background">{t('Transaction Submitted')}</Text>
           {chainId && hash && (
-            <Link external small href={getBscScanLink(hash, 'transaction', chainId)}>
+            <Link external small href={getBscScanLink(hash, 'transaction', chainId)} color="highlight">
               {t('View on BscScan')}
             </Link>
           )}
@@ -172,7 +172,7 @@ const TransactionConfirmationModal: React.FC<InjectedModalProps & ConfirmationMo
   if (!chainId) return null
 
   return (
-    <Modal title={title} headerBackground="gradients.cardHeader" onDismiss={handleDismiss}>
+    <Modal title={title} onDismiss={handleDismiss}>
       {attemptingTxn ? (
         <ConfirmationPendingContent pendingText={pendingText} />
       ) : hash ? (

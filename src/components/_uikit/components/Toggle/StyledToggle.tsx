@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Text } from 'components/_uikit'
 import { scales } from "../Checkbox/types";
-import { ToggleProps, HandleProps, InputProps, ScaleKeys } from "./types";
+import { ToggleProps, HandleProps, InputProps, HandleTextProps, ScaleKeys } from "./types";
 
 const scaleKeyValues = {
   sm: {
@@ -13,13 +14,22 @@ const scaleKeyValues = {
     toggleWidth: "36px",
   },
   md: {
+    handleHeight: "27px",
+    handleWidth: "27px",
+    handleLeft: "2px",
+    handleTop: "2px",
+    checkedLeft: "calc(100% - 29px)",
+    toggleHeight: "31px",
+    toggleWidth: "80px",
+  },
+  lg: {
     handleHeight: "32px",
     handleWidth: "32px",
     handleLeft: "4px",
     handleTop: "4px",
     checkedLeft: "calc(100% - 36px)",
     toggleHeight: "40px",
-    toggleWidth: "72px",
+    toggleWidth: "80px",
   },
 };
 
@@ -30,7 +40,7 @@ const getScale =
   };
 
 export const Handle = styled.div<HandleProps>`
-  background-color: ${({ theme }) => theme.toggle.handleBackground};
+  background-color: ${({ theme }) => theme.colors.contrast};
   border-radius: 50%;
   cursor: pointer;
   height: ${getScale("handleHeight")};
@@ -39,6 +49,18 @@ export const Handle = styled.div<HandleProps>`
   top: ${getScale("handleTop")};
   transition: left 200ms ease-in;
   width: ${getScale("handleWidth")};
+  z-index: 2;
+`;
+
+export const HandleText = styled(Text)<HandleTextProps>`
+  cursor: pointer;
+  font-size: 14px;
+  right: ${({checked}) => !checked ? "12px" : "auto"};
+  left: ${({checked}) => !checked ? "auto" : "12px"};
+  top: 6px;
+  transition: left 200ms ease-in;
+  position: absolute;
+  color: ${({ theme }) => theme.colors.contrast};
   z-index: 1;
 `;
 
@@ -53,19 +75,11 @@ export const Input = styled.input<InputProps>`
   &:checked + ${Handle} {
     left: ${getScale("checkedLeft")};
   }
-
-  &:focus + ${Handle} {
-    box-shadow: ${({ theme }) => theme.shadows.focus};
-  }
-
-  &:hover + ${Handle}:not(:disabled):not(:checked) {
-    box-shadow: ${({ theme }) => theme.shadows.focus};
-  }
 `;
 
 const StyledToggle = styled.div<ToggleProps>`
   align-items: center;
-  background-color: ${({ theme, checked }) => theme.colors[checked ? "highlight" : "textSubtle"]};
+  background-color: ${({ theme, checked }) => theme.colors[checked ? "secondary" : "input"]};
   border-radius: 24px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
   cursor: pointer;

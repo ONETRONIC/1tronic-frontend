@@ -26,7 +26,7 @@ const Menu = (props) => {
   const { currentLanguage, setLanguage, t } = useTranslation()
   const bannerSources = ["images/easter-battle.png","images/hero.png",]
 
-  const currency = useGetGeneralCurrency()
+  const currency = useGetGeneralCurrency();
   const dispatch = useDispatch<AppDispatch>()
   function getConversionValue() {
     return (Math.random() * (9 - 0.001) + 0.0001).toFixed(4);

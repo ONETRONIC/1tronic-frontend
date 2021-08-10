@@ -11,7 +11,7 @@ import { AutoRow } from '../Layout/Row'
 import { CurrencyLogo } from '../Logo'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
-  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.dropdown)};
+  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.background)};
   border-radius: 10px;
   display: flex;
   padding: 6px;
@@ -19,10 +19,13 @@ const BaseWrapper = styled.div<{ disable?: boolean }>`
   align-items: center;
   :hover {
     cursor: ${({ disable }) => !disable && 'pointer'};
-    background-color: ${({ theme, disable }) => !disable && theme.colors.background};
+    background-color: ${({ theme, disable }) => !disable && theme.colors.highlight};
   }
 
   background-color: ${({ theme, disable }) => disable && theme.colors.dropdown};
+  div{
+    color: ${({ theme, disable }) => disable && theme.colors.contrast};
+  }
   opacity: ${({ disable }) => disable && '0.4'};
 `
 
@@ -39,7 +42,7 @@ export default function CommonBases({
   return (
     <AutoColumn gap="md">
       <AutoRow>
-        <Text fontSize="14px">{t('Common bases')}</Text>
+        <Text fontSize="14px" color="background">{t('Common bases')}</Text>
         <QuestionHelper text={t('These tokens are commonly paired with other tokens.')} ml="4px" />
       </AutoRow>
       <AutoRow gap="auto">
@@ -52,14 +55,14 @@ export default function CommonBases({
           disable={selectedCurrency === ETHER}
         >
           <CurrencyLogo currency={ETHER} style={{ marginRight: 8 }} />
-          <Text>BNB</Text>
+          <Text color="background" fontSize="12px">BNB</Text>
         </BaseWrapper>
         {(chainId ? SUGGESTED_BASES[chainId] : []).map((token: Token) => {
           const selected = selectedCurrency instanceof Token && selectedCurrency.address === token.address
           return (
             <BaseWrapper onClick={() => !selected && onSelect(token)} disable={selected} key={token.address}>
               <CurrencyLogo currency={token} style={{ marginRight: 8 }} />
-              <Text>{token.symbol}</Text>
+              <Text color="background" fontSize="12px">{token.symbol}</Text>
             </BaseWrapper>
           )
         })}

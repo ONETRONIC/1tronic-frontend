@@ -14,8 +14,13 @@ export type Scales = typeof scales[keyof typeof scales];
 export interface ToggleProps extends InputHTMLAttributes<HTMLInputElement> {
   scale?: Scales;
   checked?: boolean;
+  text?: string;
 }
 
+export interface HandleTextProps {
+  scale: Scales;
+  checked?: boolean;
+}
 export interface HandleProps {
   scale: Scales;
 }

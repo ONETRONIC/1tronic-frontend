@@ -2,7 +2,7 @@ import invariant from 'tiny-invariant'
 import { Contract } from '@ethersproject/contracts'
 import { getNetwork } from '@ethersproject/networks'
 import { getDefaultProvider } from '@ethersproject/providers'
-import IPancakePair from './IPancakePair.json'
+import IPancakePair from './IOneTronicPair.json'
 import { TokenAmount } from './entities/fractions/tokenAmount'
 import { Pair } from './entities/pair'
 import ERC20 from './abis/ERC20.json'
@@ -11,7 +11,7 @@ import { Token } from './entities/token'
 
 let TOKEN_DECIMALS_CACHE: { [chainId: number]: { [address: string]: number } } = {
   [ChainId.MAINNET]: {
-    '0xE0B7927c4aF23765Cb51314A0E0521A9645F0E2A': 9 // DGD
+    '0x97300a4f628701672096460b5469c41a8d3ecb1a': 18 // DGD
   }
 }
 

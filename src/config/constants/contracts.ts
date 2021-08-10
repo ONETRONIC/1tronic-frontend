@@ -67,4 +67,16 @@ export default {
     56: '0x342c99e9aC24157657095eC69CB04b73257e7A9C',
     97: '',
   },
+  OneTronicPair: {
+    56: '',
+    97: '0x20Ece652FD5bE5d9ade57017bA444393b99B2f06',
+  },
+  OneTronicRouter02: {
+    56: '',
+    97: '0x2D4c7BA2F024A9403eC1db983B6E7C979abF5127',
+  },
+  OneTronicRouter: {
+    56: '',
+    97: '0x4e613A6034726024C9945856A9ddAd3727CF9707',
+  },
 }

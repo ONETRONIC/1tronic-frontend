@@ -195,7 +195,7 @@ export default function AddLiquidity({
   const modalHeader = () => {
     return noLiquidity ? (
       <Flex alignItems="center">
-        <Text fontSize="48px" marginRight="10px">
+        <Text fontSize="48px" marginRight="10px" color="background">
           {`${currencies[Field.CURRENCY_A]?.symbol}/${currencies[Field.CURRENCY_B]?.symbol}`}
         </Text>
         <DoubleCurrencyLogo
@@ -207,7 +207,7 @@ export default function AddLiquidity({
     ) : (
       <AutoColumn>
         <Flex alignItems="center">
-          <Text fontSize="48px" marginRight="10px">
+          <Text fontSize="48px" marginRight="10px" color="background">
             {liquidityMinted?.toSignificant(6)}
           </Text>
           <DoubleCurrencyLogo
@@ -217,11 +217,11 @@ export default function AddLiquidity({
           />
         </Flex>
         <Row>
-          <Text fontSize="24px">
+          <Text fontSize="24px" color="background">
             {`${currencies[Field.CURRENCY_A]?.symbol}/${currencies[Field.CURRENCY_B]?.symbol} Pool Tokens`}
           </Text>
         </Row>
-        <Text small textAlign="left" my="24px">
+        <Text small textAlign="left" my="24px" color="background">
           {t('Output is estimated. If the price changes by more than %slippage%% your transaction will revert.', {
             slippage: allowedSlippage / 100,
           })}

@@ -4,9 +4,6 @@ import { Button, Text, CheckmarkCircleIcon } from 'components/_uikit'
 import { AutoRow, RowFixed } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'
 import CurrencyLogo from 'components/Logo/CurrencyLogo'
-import { ListLogo } from 'components/Logo'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCombinedInactiveList } from 'state/lists/hooks'
 import styled from 'styled-components'
 import { useIsUserAddedToken, useIsTokenActive } from 'hooks/Tokens'
 import { useTranslation } from 'contexts/Localization'
@@ -16,8 +13,9 @@ const TokenSection = styled.div<{ dim?: boolean }>`
   height: 56px;
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr) auto;
-  grid-gap: 16px;
+  grid-gap: 8px;
   align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.subtleLine};
 
   opacity: ${({ dim }) => (dim ? '0.4' : '1')};
 `
@@ -27,15 +25,6 @@ const CheckIcon = styled(CheckmarkCircleIcon)`
   width: 16px;
   margin-right: 6px;
   stroke: ${({ theme }) => theme.colors.success};
-`
-
-const NameOverflow = styled.div`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 140px;
-  font-size: 12px;
 `
 
 export default function ImportRow({
@@ -52,13 +41,8 @@ export default function ImportRow({
   setImportToken: (token: Token) => void
 }) {
   // gloabls
-  const { chainId } = useActiveWeb3React()
 
   const { t } = useTranslation()
-
-  // check if token comes from list
-  const inactiveTokenList = useCombinedInactiveList()
-  const list = chainId && inactiveTokenList?.[chainId]?.[token.address]?.list
 
   // check if already active on list or local storage tokens
   const isAdded = useIsUserAddedToken(token)
@@ -66,22 +50,22 @@ export default function ImportRow({
 
   return (
     <TokenSection style={style}>
-      <CurrencyLogo currency={token} size="24px" style={{ opacity: dim ? '0.6' : '1' }} />
-      <AutoColumn gap="4px" style={{ opacity: dim ? '0.6' : '1' }}>
+      <CurrencyLogo currency={token} size="24px" style={{ opacity: dim ? '1' : '1' }} />
+      <AutoColumn gap="sm" style={{ opacity: dim ? '1' : '1' }}>
         <AutoRow>
-          <Text>{token.symbol}</Text>
-          <Text color="textDisabled" ml="8px">
-            <NameOverflow title={token.name}>{token.name}</NameOverflow>
+          <Text bold mr="6px" color="background" fontSize="12px">{token.symbol}</Text>
+          <Text small color="background" fontSize="12px">
+            {token.name}
           </Text>
         </AutoRow>
-        {list && list.logoURI && (
+        {/* {list && list.logoURI && (
           <RowFixed>
             <Text small mr="4px" color="textSubtle">
               {t('via')} {list.name}
             </Text>
             <ListLogo logoURI={list.logoURI} size="12px" />
           </RowFixed>
-        )}
+        )} */}
       </AutoColumn>
       {!isActive && !isAdded ? (
         <Button

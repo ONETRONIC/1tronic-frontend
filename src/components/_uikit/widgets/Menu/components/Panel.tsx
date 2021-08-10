@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PanelBody from "./PanelBody";
+import PanelHeader from "./PanelHeader";
 import PanelFooter from "./PanelFooter";
 import { SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "../config";
 import { PanelProps, PushedProps } from "../types";
@@ -36,7 +37,8 @@ const StyledPanel = styled.div<{ isPushed: boolean; showMenu: boolean }>`
 const Panel: React.FC<Props> = (props) => {
   const { isPushed, showMenu, showFooter } = props;
   return (
-    <StyledPanel isPushed={isPushed} showMenu={showMenu}>
+    <StyledPanel isPushed={isPushed} showMenu={showMenu}>      
+      <PanelHeader {...props} />
       <PanelBody {...props} />
       {!!showFooter && <PanelFooter {...props} />}
     </StyledPanel>

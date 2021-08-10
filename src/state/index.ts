@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import farmsReducer from './farms'
 import poolsReducer from './pools'
+import launchpadReducer from './launchpad'
 import predictionsReducer from './predictions'
 import profileReducer from './profile'
 import teamsReducer from './teams'
@@ -46,6 +47,7 @@ const store = configureStore({
     burn,
     multicall,
     lists,
+    launchpad: launchpadReducer,
   },
 })
 

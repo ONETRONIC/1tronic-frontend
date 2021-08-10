@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
-import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
+import { Route, useRouteMatch, useLocation } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon } from 'components/_uikit'
+import { Image, Heading, RowType, Toggle, Text } from 'components/_uikit'
 import { ChainId } from 'utils/@sdk'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -376,20 +376,12 @@ const Farms: React.FC = () => {
   return (
     <>
       <PageHeader>
-        <Heading as="h1" scale="xxl" color="secondary" mb="24px">
+        <Heading as="h1" scale="xl" color="primary" mb="24px">
           {t('Farms')}
         </Heading>
-        <Heading scale="lg" color="text">
+        <Text color="text" fontWeight="400" fontSize="24px" lineHeight="24px">
           {t('Stake LP tokens to earn.')}
-        </Heading>
-        <NavLink exact activeClassName="active" to="/farms/auction" id="lottery-pot-banner">
-          <Button p="0" variant="text">
-            <Text color="primary" bold fontSize="16px" mr="4px">
-              {t('Community Auctions')}
-            </Text>
-            <ArrowForwardIcon color="primary" />
-          </Button>
-        </NavLink>
+        </Text>
       </PageHeader>
       <Page>
         <ControlContainer>

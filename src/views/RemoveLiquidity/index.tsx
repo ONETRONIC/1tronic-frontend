@@ -6,7 +6,6 @@ import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, currencyEquals, ETHER, Percent, WETH } from 'utils/@sdk'
 import { Button, Text, AddIcon, ArrowDownIcon, CardBody, Slider, Box, Flex, useModal } from 'components/_uikit'
 import { RouteComponentProps } from 'react-router'
-import { BigNumber } from '@ethersproject/bignumber'
 import { useTranslation } from 'contexts/Localization'
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
 import TransactionConfirmationModal, { ConfirmationModalContent } from '../../components/TransactionConfirmationModal'
@@ -112,7 +111,7 @@ export default function RemoveLiquidity({
       { name: 'verifyingContract', type: 'address' },
     ]
     const domain = {
-      name: 'Pancake LPs',
+      name: '1TRC LPs',
       version: '1',
       chainId,
       verifyingContract: pair.liquidityToken.address,
@@ -196,14 +195,14 @@ export default function RemoveLiquidity({
     const oneCurrencyIsETH = currencyA === ETHER || currencyBIsETH
 
     if (!tokenA || !tokenB) throw new Error('could not wrap')
-
-    let methodNames: string[]
+    let estimate
+    let method: (...args: any) => Promise<TransactionResponse>
     let args: Array<string | string[] | number | boolean>
-    // we have approval, use normal remove liquidity
-    if (approval === ApprovalState.APPROVED) {
+    // if (approval === ApprovalState.APPROVED ) {
       // removeLiquidityETH
       if (oneCurrencyIsETH) {
-        methodNames = ['removeLiquidityETH', 'removeLiquidityETHSupportingFeeOnTransferTokens']
+        estimate = router.estimateGas.removeLiquidityETH
+        method = router.removeLiquidityETH
         args = [
           currencyBIsETH ? tokenA.address : tokenB.address,
           liquidityAmount.raw.toString(),
@@ -215,7 +214,8 @@ export default function RemoveLiquidity({
       }
       // removeLiquidity
       else {
-        methodNames = ['removeLiquidity']
+        estimate = router.estimateGas.removeLiquidity
+        method = router.removeLiquidity
         args = [
           tokenA.address,
           tokenB.address,
@@ -226,99 +226,81 @@ export default function RemoveLiquidity({
           deadline.toHexString(),
         ]
       }
-    }
+    // }
     // we have a signataure, use permit versions of remove liquidity
-    else if (signatureData !== null) {
-      // removeLiquidityETHWithPermit
-      if (oneCurrencyIsETH) {
-        methodNames = ['removeLiquidityETHWithPermit', 'removeLiquidityETHWithPermitSupportingFeeOnTransferTokens']
-        args = [
-          currencyBIsETH ? tokenA.address : tokenB.address,
-          liquidityAmount.raw.toString(),
-          amountsMin[currencyBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
-          amountsMin[currencyBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s,
-        ]
-      }
-      // removeLiquidityETHWithPermit
-      else {
-        methodNames = ['removeLiquidityWithPermit']
-        args = [
-          tokenA.address,
-          tokenB.address,
-          liquidityAmount.raw.toString(),
-          amountsMin[Field.CURRENCY_A].toString(),
-          amountsMin[Field.CURRENCY_B].toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s,
-        ]
-      }
-    } else {
-      throw new Error('Attempting to confirm without approval or a signature. Please contact support.')
-    }
+    // else if (signatureData !== null) {
+    //   // removeLiquidityETHWithPermit
+    //   if (oneCurrencyIsETH) {
+    //     estimate = router.estimateGas.removeLiquidityETHWithPermit
+    //     method = router.removeLiquidityETHWithPermit
+    //     args = [
+    //       currencyBIsETH ? tokenA.address : tokenB.address,
+    //       liquidityAmount.raw.toString(),
+    //       amountsMin[currencyBIsETH ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
+    //       amountsMin[currencyBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
+    //       account,
+    //       signatureData.deadline,
+    //       false,
+    //       signatureData.v,
+    //       signatureData.r,
+    //       signatureData.s,
+    //     ]
+    //   }
+    //   // removeLiquidityETHWithPermit
+    //   else {
+    //     estimate = router.estimateGas.removeLiquidityWithPermit
+    //     method = router.removeLiquidityWithPermit
+    //     args = [
+    //       tokenA.address,
+    //       tokenB.address,
+    //       liquidityAmount.raw.toString(),
+    //       amountsMin[Field.CURRENCY_A].toString(),
+    //       amountsMin[Field.CURRENCY_B].toString(),
+    //       account,
+    //       signatureData.deadline,
+    //       false,
+    //       signatureData.v,
+    //       signatureData.r,
+    //       signatureData.s,
+    //     ]
+    //   }
+    // } else {
+    //   throw new Error('Attempting to confirm without approval or a signature. Please contact support.')
+    // }
 
-    const safeGasEstimates: (BigNumber | undefined)[] = await Promise.all(
-      methodNames.map((methodName) =>
-        router.estimateGas[methodName](...args)
-          .then(calculateGasMargin)
-          .catch((err) => {
-            console.error(`estimateGas failed`, methodName, args, err)
-            return undefined
-          }),
-      ),
-    )
-
-    const indexOfSuccessfulEstimation = safeGasEstimates.findIndex((safeGasEstimate) =>
-      BigNumber.isBigNumber(safeGasEstimate),
-    )
-
-    // all estimations failed...
-    if (indexOfSuccessfulEstimation === -1) {
-      console.error('This transaction would fail. Please contact support.')
-    } else {
-      const methodName = methodNames[indexOfSuccessfulEstimation]
-      const safeGasEstimate = safeGasEstimates[indexOfSuccessfulEstimation]
-
-      setAttemptingTxn(true)
-      await router[methodName](...args, {
-        gasLimit: safeGasEstimate,
-      })
-        .then((response: TransactionResponse) => {
-          setAttemptingTxn(false)
-
-          addTransaction(response, {
-            summary: `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
-              currencyA?.symbol
-            } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`,
-          })
-
-          setTxHash(response.hash)
+    setAttemptingTxn(true)
+    await estimate(...args)
+    .then((estimatedGasLimit) =>
+      method(...args, {
+        gasLimit: calculateGasMargin(estimatedGasLimit),
+      }).then((response) => {
+        setAttemptingTxn(false)
+        addTransaction(response, {
+          summary: `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+            currencyA?.symbol
+          } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`,
         })
-        .catch((err: Error) => {
-          setAttemptingTxn(false)
-          // we only care if the error is something _other_ than the user rejected the tx
-          console.error(err)
-        })
-    }
+
+        setTxHash(response.hash)
+      }),
+    )
+    .catch((err) => {
+      setAttemptingTxn(false)
+      // we only care if the error is something _other_ than the user rejected the tx
+      if (err?.code !== 4001) {
+        console.error(err)
+      }
+    })
   }
 
   function modalHeader() {
     return (
       <AutoColumn gap="md">
         <RowBetween align="flex-end">
-          <Text fontSize="24px">{parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}</Text>
+          <Text fontSize="24px"  color="background">{parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}</Text>
           <RowFixed gap="4px">
             <CurrencyLogo currency={currencyA} size="24px" />
-            <Text fontSize="24px" ml="10px">
+            <Text fontSize="24px" ml="10px"  color="background">
               {currencyA?.symbol}
             </Text>
           </RowFixed>
@@ -327,16 +309,16 @@ export default function RemoveLiquidity({
           <AddIcon width="16px" />
         </RowFixed>
         <RowBetween align="flex-end">
-          <Text fontSize="24px">{parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}</Text>
+          <Text fontSize="24px"  color="background">{parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}</Text>
           <RowFixed gap="4px">
             <CurrencyLogo currency={currencyB} size="24px" />
-            <Text fontSize="24px" ml="10px">
+            <Text fontSize="24px" ml="10px"  color="background">
               {currencyB?.symbol}
             </Text>
           </RowFixed>
         </RowBetween>
 
-        <Text small textAlign="left" pt="12px">
+        <Text small textAlign="left" pt="12px" color="background">
           {t('Output is estimated. If the price changes by more than %slippage%% your transaction will revert.', {
             slippage: allowedSlippage / 100,
           })}
@@ -352,20 +334,20 @@ export default function RemoveLiquidity({
           {t('%assetA%/%assetB% Burned', { assetA: currencyA?.symbol ?? '', assetB: currencyB?.symbol ?? '' })}
           <RowFixed>
             <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} margin />
-            <Text>{parsedAmounts[Field.LIQUIDITY]?.toSignificant(6)}</Text>
+            <Text  color="background">{parsedAmounts[Field.LIQUIDITY]?.toSignificant(6)}</Text>
           </RowFixed>
         </RowBetween>
         {pair && (
           <>
             <RowBetween>
-              <Text>{t('Price')}</Text>
-              <Text>
+              <Text  color="background">{t('Price')}</Text>
+              <Text  color="background">
                 1 {currencyA?.symbol} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {currencyB?.symbol}
               </Text>
             </RowBetween>
             <RowBetween>
               <div />
-              <Text>
+              <Text  color="background">
                 1 {currencyB?.symbol} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {currencyA?.symbol}
               </Text>
             </RowBetween>

@@ -22,7 +22,7 @@ const useActiveWeb3React = (): Web3ReactContextInterface<Web3Provider> => {
     }
   }, [library])
 
-  return { library: provider, chainId: chainId ?? ChainId.MAINNET, ...web3React }
+  return { library: provider, chainId: chainId ?? ChainId.TESTNET, ...web3React }
 }
 
 export default useActiveWeb3React

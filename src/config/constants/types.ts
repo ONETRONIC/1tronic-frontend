@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { SerializedBigNumber, TranslatableText } from 'state/types'
 
 export interface Address {
-  97?: string
+  97: string
   56: string
 }
 
@@ -77,6 +77,22 @@ export interface PoolConfig {
   harvest?: boolean
   isFinished?: boolean
   enableEmergencyWithdraw?: boolean
+}
+
+export interface LaunchpadConfig {
+  projectId: number
+  projectTitle: string
+  projectTagline: string
+  projectDescription: string
+  projectBannerUrl: string
+  projectWebsiteUrl: string
+  symbol: string
+  amount: number
+  supportedCoin: string[]
+  price: number
+  startBlock: string
+  endOffer: string
+  status: string
 }
 
 export type Images = {

@@ -210,15 +210,12 @@ const Pools: React.FC = () => {
       <PageHeader>
         <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
           <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
-            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-              {t('Syrup Pools')}
+            <Heading as="h1" scale="xl" color="primary" mb="24px">
+              {t('Pools')}
             </Heading>
-            <Heading scale="md" color="text">
-              {t('Just stake some tokens to earn.')}
-            </Heading>
-            <Heading scale="md" color="text">
-              {t('High APR, low risk.')}
-            </Heading>
+            <Text color="text" fontWeight="400" fontSize="24px" lineHeight="24px">
+            {t('Just stake some tokens to earn.')}{t('High APR, low risk.')}
+            </Text>
           </Flex>
           <Flex flex="1" height="fit-content" justifyContent="center" alignItems="center" mt={['24px', null, '0']}>
             <HelpButton />
@@ -275,7 +272,7 @@ const Pools: React.FC = () => {
           </SearchSortContainer>
         </PoolControls>
         {showFinishedPools && (
-          <Text fontSize="20px" color="failure" pb="32px">
+          <Text fontSize="12px" color="failure" pb="32px">
             {t('These pools are no longer distributing rewards. Please unstake your tokens.')}
           </Text>
         )}

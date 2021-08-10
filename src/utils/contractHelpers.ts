@@ -23,6 +23,8 @@ import {
   getMulticallAddress,
   getBunnySpecialCakeVaultAddress,
   getBunnySpecialPredictionAddress,
+  getOneTronicRouter02Address,
+  getOneTronicPairAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -52,6 +54,8 @@ import MultiCallAbi from 'config/abi/Multicall.json'
 import bunnySpecialCakeVaultAbi from 'config/abi/bunnySpecialCakeVault.json'
 import bunnySpecialPredictionAbi from 'config/abi/bunnySpecialPrediction.json'
 import { ChainLinkOracleContract, PredictionsContract } from './types'
+import OneTronicRouter02ABI from './@onetronic/build/OneTronicRouter02.json'
+import OneTronicPairABI from './@onetronic/build/OneTronicPair.json'
 
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   const signerOrProvider = signer ?? simpleRpcProvider
@@ -134,4 +138,10 @@ export const getBunnySpecialCakeVaultContract = (signer?: ethers.Signer | ethers
 }
 export const getBunnySpecialPredictionContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(bunnySpecialPredictionAbi, getBunnySpecialPredictionAddress(), signer)
+}
+export const getOneTronicRouter02Contract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(OneTronicRouter02ABI, getOneTronicRouter02Address(), signer)
+}
+export const getOneTronicPairContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(OneTronicPairABI, getOneTronicPairAddress(), signer)
 }

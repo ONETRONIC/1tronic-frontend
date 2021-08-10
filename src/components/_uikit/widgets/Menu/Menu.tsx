@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     right: 0px;
     bottom: calc(100vh - 285px);
     left: 0px;
-    background: url(images/1tronic/decoration-back.svg) center center;
+    background: url(/images/1tronic/decoration-back.svg) center center;
     opacity: .07;
   }
 `;
@@ -60,7 +60,7 @@ const BackGroundImg2 = styled.div<{ showBgDecoration: boolean }>`
   width: 100%;
   position: absolute;
   left: 0;
-  height: calc(100vh - 600px);
+  height: 100vh;
   top: ${({ showBgDecoration }) => (showBgDecoration ? `240px` : `20px`)};
   border-top: 1px solid ;
   border-color: ${({ theme }) => theme.colors.backgroundDisabled};
@@ -80,7 +80,7 @@ const RobotImgCard = styled.img`
   filter: drop-shadow(5px 10px 2px rgba(0,0,0,0.5));
   right: 0;
   ${({ theme }) => theme.mediaQueries.nav} {
-    right: ${SIDEBAR_WIDTH_FULL}px;
+    right: max(${SIDEBAR_WIDTH_FULL}px, calc((100vw - 1440px)/2));
   }  
 `;
 
@@ -96,9 +96,9 @@ const InnerFixed = styled.div<{ showMenu: boolean }>`
   max-width: 100%;
 
   ${({ theme }) => theme.mediaQueries.nav} {
-    margin-left: ${SIDEBAR_WIDTH_FULL}px;
-    margin-right: ${SIDEBAR_WIDTH_FULL}px;
-    max-width: calc(100% - ${SIDEBAR_WIDTH_FULL}px);
+    margin-left: max(${SIDEBAR_WIDTH_FULL}px, calc((100vw - 1440px)/2));
+    margin-right: max(${SIDEBAR_WIDTH_FULL}px, calc((100vw - 1440px)/2));
+    max-width: 1440px;
   }
 `;
 
@@ -119,9 +119,9 @@ const Hero = styled.div`
     padding-top: 0;
   }
   ${({ theme }) => theme.mediaQueries.nav} {
-    margin-left: ${SIDEBAR_WIDTH_FULL}px;
-    margin-right: ${SIDEBAR_WIDTH_FULL}px;
-    max-width: calc(100% - ${SIDEBAR_WIDTH_FULL}px);
+    margin-left: max(${SIDEBAR_WIDTH_FULL}px, calc((100vw - 1440px)/2));
+    margin-right: max(${SIDEBAR_WIDTH_FULL}px, calc((100vw - 1440px)/2));
+    max-width: 1440px;
   }
 `
 
@@ -139,7 +139,7 @@ const MobileLogo = styled.div`
 
 const Banner = styled.div`
   height: 120px;
-  max-width: 980px;
+  max-width: 920px;
   margin: auto;
   margin-bottom: 60px;
   img{
@@ -176,7 +176,6 @@ const Menu: React.FC<NavProps> = ({
   links,
   children,
   tagline,
-  bannerSources,
   showMascott,
   showBgDecoration,
   currency,
@@ -187,15 +186,15 @@ const Menu: React.FC<NavProps> = ({
   const isMobile = isXl === false;
   const [isPushed, setIsPushed] = useState(false);
   const [showMenu ] = useState(true);
-  let bannerPath = bannerSources[1];
-  let indexBanner = 0;
-  function switchBanner() {
-    if (indexBanner === bannerSources.length) {
-      indexBanner = 0;
-    }
-    bannerPath = bannerSources[indexBanner];
-    indexBanner++;
-  }
+  // let bannerPath = bannerSources[1];
+  // let indexBanner = 0;
+  // function switchBanner() {
+  //   if (indexBanner === bannerSources.length) {
+  //     indexBanner = 0;
+  //   }
+  //   bannerPath = bannerSources[indexBanner];
+  //   indexBanner++;
+  // }
 
   useEffect(() => {
     
@@ -203,7 +202,7 @@ const Menu: React.FC<NavProps> = ({
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Home");
   
-  setInterval(switchBanner, 500);
+  // setInterval(switchBanner, 500);
   return (
     <Wrapper>      
       <BodyWrapper>
@@ -227,14 +226,14 @@ const Menu: React.FC<NavProps> = ({
             </Flex>
           </MobileLogo>)}
           <Hero>
-            <Banner>
-              <img src={bannerPath} alt="Logo" />
+            <Banner>              
+              <ins data-revive-zoneid="2" data-revive-id="334e2814b61d4020ee29a24975d46ada"/>
             </Banner>
             <Tagliner>
               <div >
                 <NavLink exact activeClassName="active" to="/" id="farm-apr-cta">
                   <Flex alignItems="center" mb="4px">
-                    <LogoMini src="images/1tronic/swap.svg" alt="Logo"/>
+                    <LogoMini src="/images/1tronic/swap.svg" alt="Logo"/>
                     <Heading as="h1" scale="lg" color="primary" ml="12px">
                       1TRONICSWAP
                     </Heading>
@@ -257,8 +256,8 @@ const Menu: React.FC<NavProps> = ({
               </Flex>
             </Tagliner>
             <BackGroundCardWrapper>
-              {showBgDecoration && (<BackGroundImgCard src="images/1tronic/decoration-card-vert.svg" alt="background"/>)}
-              {showMascott && (<RobotImgCard src="images/1tronic/mascott.svg" alt="background"/>)}
+              {showBgDecoration && (<BackGroundImgCard src="/images/1tronic/decoration-card-vert.svg" alt="background"/>)}
+              {showMascott && !isMobile && (<RobotImgCard src="/images/1tronic/mascott.svg" alt="background"/>)}
               <BackGroundImg2 showBgDecoration={showBgDecoration}/>
             </BackGroundCardWrapper>
           </Hero>
@@ -267,7 +266,7 @@ const Menu: React.FC<NavProps> = ({
           isPushed={isPushed}
           isMobile={isMobile}
           showMenu={showMenu}
-          showFooter={false}
+          showFooter
           isDark={isDark}
           toggleTheme={toggleTheme}
           langs={langs}

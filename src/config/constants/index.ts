@@ -1,7 +1,7 @@
 import { ChainId, JSBI, Percent, Token, WETH } from 'utils/@sdk'
 import { BUSD, DAI, USDT, BTCB, CAKE, WBNB, UST, ETH, USDC } from './tokens'
 
-export const ROUTER_ADDRESS = '0x4e613A6034726024C9945856A9ddAd3727CF9707'
+export const ROUTER_ADDRESS = '0x2D4c7BA2F024A9403eC1db983B6E7C979abF5127'
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -33,8 +33,8 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.MAINNET]: [BUSD[ChainId.MAINNET], CAKE[ChainId.MAINNET], BTCB],
-  [ChainId.TESTNET]: [WETH[ChainId.TESTNET], CAKE[ChainId.TESTNET], BUSD[ChainId.TESTNET]],
+  [ChainId.MAINNET]: [BUSD[ChainId.MAINNET], BTCB],
+  [ChainId.TESTNET]: [WETH[ChainId.TESTNET], BUSD[ChainId.TESTNET]],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend

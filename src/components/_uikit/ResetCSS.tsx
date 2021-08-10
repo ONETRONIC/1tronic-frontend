@@ -109,7 +109,7 @@ const ResetCSS = createGlobalStyle`
     cursor: pointer;
     /* Hides the slider so custom styles can be added */
     background: transparent; 
-    border-color: transparent;
+    border-color: tranWsparent;
     color: transparent;
   }  
   iframe

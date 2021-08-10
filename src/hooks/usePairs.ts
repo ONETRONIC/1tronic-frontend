@@ -1,6 +1,6 @@
 import { TokenAmount, Pair, Currency } from 'utils/@sdk'
 import { useMemo } from 'react'
-import { abi as IOneTronicPairABI } from 'utils/@onetronic/Factory/build/IOneTronicPair.json'
+import { abi as IOneTronicPairABI } from 'utils/@onetronic/build/IOneTronicPair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 

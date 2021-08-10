@@ -2,8 +2,9 @@ import { ThunkAction } from 'redux-thunk'
 import { AnyAction } from '@reduxjs/toolkit'
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
-import { CampaignType, FarmConfig, LotteryStatus, LotteryTicket, Nft, PoolConfig, Team } from 'config/constants/types'
+import { CampaignType, FarmConfig, LaunchpadConfig, LotteryStatus, LotteryTicket, Nft, PoolConfig, Team } from 'config/constants/types'
 import { ChainId } from 'utils/@sdk'
+import { Field } from './launchpad/actions'
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, State, unknown, AnyAction>
 
@@ -57,6 +58,21 @@ export interface Pool extends PoolConfig {
   }
 }
 
+export interface Launchpad extends LaunchpadConfig {
+  projectId: number
+  projectTitle: string
+  projectTagline: string
+  projectDescription: string
+  projectBannerUrl: string
+  projectWebsiteUrl: string
+  symbol: string
+  amount: number
+  supportedCoin: string[]
+  price: number
+  startBlock: string
+  endOffer: string
+}
+
 export interface Profile {
   userId: number
   points: number
@@ -106,6 +122,21 @@ export interface PoolsState {
   data: Pool[]
   cakeVault: CakeVault
   userDataLoaded: boolean
+}
+
+export interface LaunchpadsState {
+  data: Launchpad[]
+  userDataLoaded: boolean
+  independentField: Field
+  typedValue: string
+  [Field.INPUT]: {
+    currencyId: string | undefined
+  }
+  [Field.OUTPUT]: {
+    currencyId: string | undefined
+  }
+  // the typed recipient address or ENS name, or null if launchpad should go to sender
+  recipient: string | null
 }
 
 export interface ProfileState {
@@ -491,4 +522,5 @@ export interface State {
   voting: VotingState
   lottery: LotteryState
   general: GeneralState
+  launchpad: LaunchpadsState
 }

@@ -42,11 +42,9 @@ function variantInverseSelector(theme, variant){
 const InactiveButton: PolymorphicComponent<InactiveButtonProps, "button"> = styled(Button)<InactiveButtonProps>`
   background-color: ${({ theme, variant }) => (variantSelector(theme, variant))};
   color: ${({ theme, variant }) => (variantInverseSelector(theme, variant))};
-  border: 1px solid ${({ theme, variant }) => (variantInverseSelector(theme, variant))};
   &:hover:not(:disabled):not(:active) {    
     color: ${({ theme, variant }) => (variantSelector(theme, variant))};
     background-color: ${({ theme, variant }) => (variantInverseSelector(theme, variant))};
-    border: 1px solid ${({ theme, variant }) => (variantInverseSelector(theme, variant))};
   }
 `;
 

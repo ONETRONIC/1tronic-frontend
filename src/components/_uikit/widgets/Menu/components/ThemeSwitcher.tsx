@@ -1,12 +1,7 @@
 import React from "react";
-import { SvgProps } from "../../../components/Svg";
+import { Toggle } from "components/_uikit";
 import Text from "../../../components/Text/Text";
 import Flex from "../../../components/Box/Flex";
-import Button from "../../../components/Button/Button";
-import * as IconModule from "../icons";
-
-const Icons = IconModule as unknown as { [key: string]: React.FC<SvgProps> };
-const { MoonIcon, SunIcon } = Icons;
 
 interface Props {
   isDark: boolean;
@@ -14,16 +9,24 @@ interface Props {
 }
 
 const ThemeSwitcher: React.FC<Props> = ({ isDark, toggleTheme }) => (
-  <Button variant="text" onClick={() => toggleTheme(!isDark)}>
-    {/* alignItems center is a Safari fix */}
-    <Flex alignItems="center">
-      <SunIcon color={isDark ? "textDisabled" : "text"} width="24px" />
-      <Text color="textDisabled" mx="4px">
-        /
-      </Text>
-      <MoonIcon color={isDark ? "text" : "textDisabled"} width="24px" />
-    </Flex>
-  </Button>
+  <Flex justifyContent="space-between" width="100%" mb="10px">    
+    <Text color="contrast" mx="4px">
+      Theme
+    </Text>
+    <Toggle
+      checked={!isDark}
+      scale="md"
+      text={isDark ? "Dark" : "Light"}
+      onChange={() => {
+        toggleTheme(!isDark)
+        // if (isDark) {
+        //   // toggleTheme(!isDark)
+        // } else {
+        //   // toggleTheme(isDark)
+        // }
+      }}
+    />
+  </Flex>
 );
 
 export default React.memo(ThemeSwitcher, (prev, next) => prev.isDark === next.isDark);

@@ -7,6 +7,7 @@ import { useTranslation } from 'contexts/Localization'
 const StyledInput = styled(Input)`
   border-radius: 8px;;
   margin-left: auto;
+  font-size: 16px;
 `
 
 const InputWrapper = styled.div`

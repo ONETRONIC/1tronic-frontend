@@ -23,12 +23,14 @@ import {
   getLotteryV2Contract,
   getBunnySpecialCakeVaultContract,
   getBunnySpecialPredictionContract,
+  getOneTronicRouter02Contract,
+  getOneTronicPairContract,
 } from 'utils/contractHelpers'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
 import { ChainId, WETH } from 'utils/@sdk'
-import { abi as IOneTronicPairABI } from 'utils/@onetronic/Factory/build/IOneTronicPair.json'
+import { abi as IOneTronicPairABI } from 'utils/@onetronic/build/IOneTronicPair.json'
 import ENS_PUBLIC_RESOLVER_ABI from '../config/abi/ens-public-resolver.json'
 import ENS_ABI from '../config/abi/ens-registrar.json'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
@@ -152,6 +154,16 @@ export const useSpecialBunnyCakeVaultContract = () => {
 export const useSpecialBunnyPredictionContract = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getBunnySpecialPredictionContract(library.getSigner()), [library])
+}
+
+export const useOneTronicRouter02Contract = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getOneTronicRouter02Contract(library.getSigner()), [library])
+}
+
+export const useOneTronicPairContract = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getOneTronicPairContract(library.getSigner()), [library])
 }
 
 // Code below migrated from Exchange useContract.ts

@@ -47,6 +47,9 @@ const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
 const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
 const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
+const Advertising = lazy(() => import('./views/Advertising'))
+const Launchpad = lazy(() => import('./views/Launchpad'))
+const LaunchpadDetail = lazy(() => import('./views/Launchpad/detail'))
 
 // This config is required for number formatting
 BigNumber.config({
@@ -128,6 +131,16 @@ const App: React.FC = () => {
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
             <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
             <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+            
+            {/* Launchpad */}
+            <Route path="/launchpads">
+              <Launchpad />
+            </Route>
+            <Route exact strict path="/launchpad/:projectId" component={LaunchpadDetail} />
+
+            <Route path="/advertising">
+              <Advertising />
+            </Route>
 
             {/* Redirect */}
             <Route path="/pool">

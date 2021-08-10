@@ -122,6 +122,7 @@ export default function SlippageTabs({ rawSlippage, setRawSlippage, deadline, se
           <RowBetween>
             <Input
               scale="lg"
+              contrastMode
               placeholder={(rawSlippage / 100).toFixed(2)}
               value={slippageInput}
               onBlur={() => {
@@ -161,6 +162,7 @@ export default function SlippageTabs({ rawSlippage, setRawSlippage, deadline, se
         <RowFixed>
           <Input
             color={deadlineError ? 'red' : undefined}
+            contrastMode
             onBlur={() => {
               parseCustomDeadline((deadline / 60).toString())
             }}

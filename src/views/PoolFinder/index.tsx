@@ -27,6 +27,14 @@ enum Fields {
 const StyledButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.input};
   color: ${({ theme }) => theme.colors.text};
+  :hover{
+    div{
+      color: ${({ theme }) => theme.colors.background};
+      div{
+        color: ${({ theme }) => theme.colors.background};
+      }
+    }    
+  }
   box-shadow: none;
   border-radius: 8px;;
 `

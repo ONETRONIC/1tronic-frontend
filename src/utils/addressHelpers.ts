@@ -62,3 +62,9 @@ export const getBunnySpecialCakeVaultAddress = () => {
 export const getBunnySpecialPredictionAddress = () => {
   return getAddress(addresses.bunnySpecialPrediction)
 }
+export const getOneTronicRouter02Address = () => {
+  return getAddress(addresses.OneTronicRouter02)
+}
+export const getOneTronicPairAddress = () => {
+  return getAddress(addresses.OneTronicPair)
+}
